@@ -3,7 +3,7 @@
 const { createClient } = require("redis");
 
 const redisClient = createClient({
-  url: "redis://127.0.0.1:6379",
+  url: process.env.REDIS_URL || "redis://127.0.0.1:6379",
 });
 
 redisClient.on("error", (err) => {
@@ -25,7 +25,19 @@ const connectRedis = async () => {
   }
 };
 
+const disconnectRedis = async () => {
+  try {
+    if (redisClient.isOpen) {
+      await redisClient.quit();
+      console.log("Redis Disconnected Successfully");
+    }
+  } catch (error) {
+    console.error("Redis Disconnect Error:", error.message);
+  }
+};
+
 module.exports = {
   redisClient,
   connectRedis,
+  disconnectRedis,
 };

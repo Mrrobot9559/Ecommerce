@@ -3,8 +3,8 @@ const { RedisStore } = require("rate-limit-redis");
 const { redisClient } = require("../config/redis");
 
 const rateLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 500000000,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: Number(process.env.RATE_LIMIT_MAX) || 100, // configurable per-IP limit
 
   standardHeaders: "draft-8",
   legacyHeaders: false,

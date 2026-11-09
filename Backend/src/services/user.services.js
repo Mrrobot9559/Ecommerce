@@ -1,4 +1,4 @@
-const User = require("../modeles/user.model");
+const User = require("../models/user.model");
 
 const findOne = (query, projection) => User.findOne(query, projection);
 

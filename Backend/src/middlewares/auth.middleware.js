@@ -25,12 +25,10 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-authMiddleware.isAdmin = (req,res,next) => {
-  if (!req.user.role == "admin") {
-    return next(new ApiError(401, "unauthorize access authentication token"));
-
+authMiddleware.isAdmin = (req, res, next) => {
+  if (!req.user || req.user.role !== "admin") {
+    return next(new ApiError(403, "Access forbidden: Admin rights required"));
   }
-  next()
-
-}
+  next();
+};
 module.exports = authMiddleware;
